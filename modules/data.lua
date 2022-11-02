@@ -1,7 +1,7 @@
 --- Text UI creation
 --- Used if you plan on having several hospital locations
 --- Create as many locations as you would like
---- Coords where the text ui will display. Ignore if you are using ox_target, just create npcs.
+--- Coordinates where you would like the TextUI to appear. Ignore if you are using ox_target, just create NPC.
 locations = {
 	vector3(295.52, -1447.12, 29.96),
 	--[[
@@ -13,7 +13,7 @@ locations = {
 --- NPC creation
 --- Used if you plan on having several hospital locations
 --- Create as many npcs as you would like
---- Change to your liking. don't touch anything else if you don't know what you are doing.
+--- Change to your liking. Don't touch anything else if you don't know what you are doing.
 local npc = {}
 local ped = {
 	{
@@ -64,6 +64,7 @@ for i = 1, #ped do
 			false,
 			false
 		)
+
 		FreezeEntityPosition(npc[i], true)
 		SetEntityInvincible(npc[i], true)
 		SetBlockingOfNonTemporaryEvents(npc[i], true)
@@ -77,7 +78,7 @@ end
 --- Blip creation
 --- Used if you plan on having several hospital locations
 --- Create as many map blips as you would like
---- Change to your liking. reference: https://docs.fivem.net/docs/game-references/blips/
+--- Change to your liking. Reference: https://docs.fivem.net/docs/game-references/blips/
 local blips = {
 	{ title = "Medical Center", color = 23, id = 61, size = 0.7, x = 295.48, y = -1447.24, z = 29.96 },
 	--[[

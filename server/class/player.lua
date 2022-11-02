@@ -1,5 +1,5 @@
 CState = {}
-Data = {}
+player = {}
 
 function CState:get(entityId, stateBag)
 	local player = Player(entityId)
@@ -16,23 +16,23 @@ function CState:set(entityId, stateBag, bool, replicated)
 	player.state:set(stateBag, bool, replicated)
 end
 
-Data.playerStates = {
-	"isBleeding",
-}
+player.playerStates = { "isBleeding" }
 
-for i = 1, #Data.playerStates do
-	local state = Data.playerStates[i]
+for i = 1, #player.playerStates do
+	local state = player.playerStates[i]
 	AddStateBagChangeHandler(state, false, function(bagName, key, value, source, replicated)
-		local playerNet = tonumber(bagName:gsub("player:", ""), 10)
 		print("bagName: [" .. key .. "] value: [" .. tostring(value) .. "] replicated: [" .. tostring(replicated) .. "]")
-		print(playerNet)
 	end)
 end
 
---- Todo: finish
-lib.callback.register("qhospital:server:fetchStatus", function(source)
+AddEventHandler("ox:playerLoaded", function(source, userid, charid)
 	local player = Ox.GetPlayer(source)
-	if not player then return end
+	local result = MySQL.single.await("SELECT metadata FROM characters WHERE charid = ?", { charid })
+	if not result or not player then end
+	print(player, result)
+end)
 
-	print(player, "fetch?")
+AddEventHandler("ox:playerLogout", function(source, userid, charid)
+	local player = Ox.GetPlayer(source)
+	if not player then print("player not found in ox_core?") end
 end)

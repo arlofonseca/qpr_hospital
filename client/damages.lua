@@ -1,30 +1,8 @@
 local CState = {}
-local playerLoaded = false
 
 function CState:set(state, bool, replicated)
 	LocalPlayer.state:set(state, bool, replicated)
 end
-
---- Todo: finish
-RegisterNetEvent("ox:playerLoaded", function()
-	playerLoaded = true
-	lib.callback("qhospital:server:fetchStatus", false, function(data)
-		if data then
-			for k, v in pairs(data) do
-				CState:fetch(k, v)
-			end
-		end
-	end)
-end)
-
-AddEventHandler("ox:playerLogout", function()
-	playerLoaded = false
-	for k, v in pairs(player.Status) do
-		local status = player(k)
-		CState:store()
-	end
-end)
---- end
 
 function CState:bleeding()
 	local health = GetEntityHealth(cache.ped)
@@ -70,11 +48,6 @@ end
 if config.general.debug then
 	RegisterCommand("debug:bleed", function()
 		SetEntityHealth(cache.ped, 130)
-		print("[DEBUG]: health set: 130")
-	end)
-
-	RegisterCommand("debug:heal", function()
-		SetEntityHealth(cache.ped, 200)
-		print("[DEBUG]: health set: 200")
+		print("[DEBUG]: health set to 130")
 	end)
 end

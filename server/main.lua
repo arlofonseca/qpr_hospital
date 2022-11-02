@@ -1,11 +1,8 @@
 local ox_inventory = exports.ox_inventory
-GlobalState.hospitalState = true
 
-lib.callback.register("qhospital:server:treatment", function(source)
+lib.callback.register("qpr_hospital:server:treatment", function(source)
 	local player = Ox.GetPlayer(source)
 	if not player then return end
-
-	if not GlobalState.hospitalState then return end
 
 	local entityId = source
 	local playerState = CState:get(entityId, "isBleeding")
@@ -17,7 +14,6 @@ lib.callback.register("qhospital:server:treatment", function(source)
 			position = "top",
 			description = "You do not need medical attention at the moment",
 		})
-		print(entityId, playerState)
 
 		return
 	end
@@ -51,11 +47,9 @@ lib.callback.register("qhospital:server:treatment", function(source)
 	return cache
 end)
 
-lib.callback.register("qhospital:server:bandage", function(source)
+lib.callback.register("qpr_hospital:server:bandage", function(source)
 	local player = Ox.GetPlayer(source)
 	if not player then return end
-
-	if not GlobalState.hospitalState then return end
 
 	local src = source
 	local cache = nil
@@ -85,18 +79,4 @@ lib.callback.register("qhospital:server:bandage", function(source)
 	end
 
 	return cache
-end)
-
-lib.addCommand("group.admin", "toggle:hospital", function(args, source)
-	local player = Ox.GetPlayer(source)
-	if not player then return end
-
-	GlobalState.hospitalState = not GlobalState.hospitalState
-
-	local hospitalState = GlobalState.hospitalState and "open" or "closed"
-
-	TriggerClientEvent("chat:addMessage", -1, {
-		template = '<div class="chat-message text-system"><span class="text-white">[SYSTEM]: Local Medical Center is now {0}.</span></div>',
-		args = { hospitalState },
-	})
 end)

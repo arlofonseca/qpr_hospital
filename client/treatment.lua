@@ -7,14 +7,14 @@ local function hospitalContext()
 		title = "Medical Treatment",
 		description = "A procedure, or regimen, such as a drug, surgery, or exercise, in an attempt to cure or mitigate a disease, condition, or injury.",
 		metadata = { "You will feel dizzy, and nauseous for a short period of time after the procedure." },
-		event = "qhospital:client:treatment",
+		event = "qpr_hospital:client:treatment",
 	})
 
 	table.insert(options, {
 		title = "Need a bandage?",
 		description = "Buy a strip of material used to bind a wound or to protect an injured part of the body.",
 		metadata = { "This seems like a better idea, yea?" },
-		event = "qhospital:client:bandage",
+		event = "qpr_hospital:client:bandage",
 	})
 
 	lib.registerContext({
@@ -78,9 +78,9 @@ function startPlayerTreatment()
 	end
 end
 
-RegisterNetEvent("qhospital:client:treatment", function()
+RegisterNetEvent("qpr_hospital:client:treatment", function()
 	if config.treatment.costmoney then
-		lib.callback("qhospital:server:treatment", false, function(success)
+		lib.callback("qpr_hospital:server:treatment", false, function(success)
 			if success then
 				startPlayerTreatment()
 			end
@@ -90,20 +90,12 @@ RegisterNetEvent("qhospital:client:treatment", function()
 	end
 end)
 
-RegisterNetEvent("qhospital:client:bandage", function()
-	lib.callback("qhospital:server:bandage", false, function(success)
+RegisterNetEvent("qpr_hospital:client:bandage", function()
+	lib.callback("qpr_hospital:server:bandage", false, function(success)
 		if success then
-			print("bandage purchased")
+			-- congrats, you purchased a bandage!
 		elseif not success then
-			print("your broke")
+			-- you have no money.
 		end
 	end)
 end)
-
---- Debug
-if config.general.debug then
-	RegisterCommand("debug:menu", function()
-		hospitalContext()
-		print("[DEBUG]: context menu loaded")
-	end)
-end

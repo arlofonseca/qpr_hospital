@@ -1,2 +1,1 @@
-currentResourceName = GetCurrentResourceName()
-config = json.decode(LoadResourceFile(currentResourceName, "modules/config.json"))
+config = json.decode(LoadResourceFile(cache.resource, "modules/config.json"))
