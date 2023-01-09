@@ -8,11 +8,11 @@
 	},
 
 	"treatment": {
+		"enabled": true,
 		"item": "money",
-		"costmoney": true,
 		"price": 2000,
 		"dict": "missheistdockssetup1clipboard@base",
-		"anim": "base"
+		"clip": "base"
 	},
 
 	"bandage": {
@@ -21,7 +21,7 @@
 	},
 
 	"bleeding": {
-		"set": true,
+		"enabled": true,
 		"anim": "move_m@injured",
 		"effect": "SMALL_EXPLOSION_SHAKE",
 		"intensity": 1.0

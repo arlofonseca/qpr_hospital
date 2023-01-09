@@ -1,40 +1,46 @@
---- Text UI creation
---- Used if you plan on having several hospital locations
---- Create as many locations as you would like
---- Coordinates where you would like the TextUI to appear. Ignore if you are using ox_target, just create NPC.
 locations = {
-	vector3(295.52, -1447.12, 29.96),
+	vector3(294.540649, -1448.413208, 28.953857),
+	vector3(-448.101105, -340.813171, 33.486450),
+	vector3(357.138458, -593.472534, 27.774414),
 	--[[
 	vector3(0, 0, 0),
 	vector3(0, 0, 0),
 	--]]
 }
 
---- NPC creation
---- Used if you plan on having several hospital locations
---- Create as many npcs as you would like
---- Change to your liking. Don't touch anything else if you don't know what you are doing.
-local npc = {}
-local ped = {
+local entity = {}
+local npcs = {
 	{
 		name = "hospital-1",
 		model = config.npc.model,
-		coords = vector3(294.64, -1448.2, 28.96),
-		heading = 320.2867,
+		coords = vector3(294.540649, -1448.413208, 28.953857),
+		heading = 320.314972,
+		gender = "male",
+	},
+	{
+		name = "hospital-2",
+		model = config.npc.model,
+		coords = vector3(-448.101105, -340.813171, 33.486450),
+		heading = 79.370079,
+		gender = "male",
+	},
+	{
+		name = "hospital-3",
+		model = config.npc.model,
+		coords = vector3(357.138458, -593.472534, 27.774414),
+		heading = 249.448822,
 		gender = "male",
 	},
 	--[[
 	{
-	{
-		name = "hospital-2",
+		name = "hospital-4",
 		model = config.npc.model,
 		coords = vector3(0, 0, 0),
 		heading = 0,
 		gender = "male",
 	},
 	{
-	{
-		name = "hospital-3",
+		name = "hospital-5",
 		model = config.npc.model,
 		coords = vector3(0, 0, 0),
 		heading = 0,
@@ -43,10 +49,10 @@ local ped = {
 	--]]
 }
 
-for i = 1, #ped do
-	local pedZones = lib.points.new(ped[i].coords, 30, { zone = k, data = ped[i] })
+for i = 1, #npcs do
+	local zones = lib.points.new(npcs[i].coords, 30, { zone = k, data = npcs[i] })
 
-	function pedZones:onEnter()
+	function zones:onEnter()
 		lib.requestModel(self.data.model)
 		if self.data.gender == "male" then
 			gender = 4
@@ -54,7 +60,7 @@ for i = 1, #ped do
 			gender = 5
 		end
 
-		npc[i] = CreatePed(
+		entity[i] = CreatePed(
 			gender,
 			self.data.model,
 			self.data.coords.x,
@@ -65,25 +71,63 @@ for i = 1, #ped do
 			false
 		)
 
-		FreezeEntityPosition(npc[i], true)
-		SetEntityInvincible(npc[i], true)
-		SetBlockingOfNonTemporaryEvents(npc[i], true)
+		FreezeEntityPosition(entity[i], true)
+		SetEntityInvincible(entity[i], true)
+		SetBlockingOfNonTemporaryEvents(entity[i], true)
 	end
 
-	function pedZones:onExit()
-		DeletePed(npc[i])
+	function zones:onExit()
+		DeletePed(entity[i])
 	end
 end
 
---- Blip creation
---- Used if you plan on having several hospital locations
---- Create as many map blips as you would like
---- Change to your liking. Reference: https://docs.fivem.net/docs/game-references/blips/
 local blips = {
-	{ title = "Medical Center", color = 23, id = 61, size = 0.7, x = 295.48, y = -1447.24, z = 29.96 },
+	{
+		title = "Central Los Santos Medical Center",
+		color = 23,
+		id = 61,
+		size = 0.7,
+		x = 294.540649,
+		y = -1448.413208,
+		z = 28.953857,
+	},
+	{
+		title = "Mount Zonah Medical Center",
+		color = 23,
+		id = 61,
+		size = 0.7,
+		x = -448.101105,
+		y = -340.813171,
+		z = 33.486450,
+	},
+	{
+		title = "Pillbox Hill Medical Center",
+		color = 23,
+		id = 61,
+		size = 0.7,
+		x = 357.138458,
+		y = -593.472534,
+		z = 27.774414,
+	},
 	--[[
-	{ title = "Pillbox Hospital", color = 0, id = 0, size = 0, x = 0, y = 0, z = 0 },
-	{ title = "Ocean Medical Center", color = 0, id = 0, size = 0, x = 0, y = 0, z = 0 },
+	{
+		title = "hospital-4",
+		color = 23,
+		id = 61,
+		size = 0.7,
+		x = 0,
+		y = 0,
+		z = 0,
+	},
+	{
+		title = "hospital-5",
+		color = 23,
+		id = 61,
+		size = 0.7,
+		x = 0,
+		y = 0,
+		z = 0,
+	},
 	--]]
 }
 
